@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ШАРЛАНДИЯ - Аэродизайн и оформление праздников</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .color-option {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #d1d5db;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        .color-option.active {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-card:hover {
+            transform: scale(1.02);
+        }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 50px;
+            height: 50px;
+            background-color: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-to-top:hover {
+            background-color: #1d4ed8;
+            transform: scale(1.1);
+        }
+        .menu-toggle {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .main-nav {
+                display: none;
+            }
+            .main-nav.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            <span class="text-xl font-bold text-gray-900">ШАРЛАНДИЯ</span>
+                        </div>
+                    </div>
+                    
+                    <nav class="hidden md:flex space-x-8 main-nav" id="mainNav">
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Покупателю</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Новости</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Оформление праздников</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Бонусная программа</a>
+                    </nav>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <div class="hidden md:block text-gray-700 text-sm">
+                        <span class="font-medium">8-923-611-1910</span>
+                    </div>
+                    <div class="hidden md:block text-gray-700 text-sm">
+                        <span>г. Кемерово, ул. Дзержинского д.4</span>
+                    </div>
+                    
+                    <button id="menuToggle" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 menu-toggle">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main navigation bar -->
+            <div class="flex items-center justify-between py-4 border-t border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <button class="bg-blue-800 text-white px-6 py-2 rounded-full font-medium flex items-center space-x-2">
+                        <span>••</span>
+                        <span>Каталог</span>
+                    </button>
+                    
+                    <div class="relative flex-1 max-w-lg">
+                        <input
+                            type="text"
+                            placeholder="Искать"
+                            class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <i class="fas fa-search absolute right-3 top-2.5 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                        <i class="fas fa-star w-5 h-5"></i>
+                        <span class="ml-1 text-sm">Акции</span>
+                    </button>
+                    <button class="p-2 text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                        <i class="fas fa-truck w-5 h-5"></i>
+                        <span class="ml-1 text-sm">Доставка</span>
+                    </button>
+                    <button class="p-2 relative text-gray-700 hover:text-blue-600 transition-colors duration-200">
+                        <i class="fas fa-shopping-bag w-5 h-5"></i>
+                        <span class="ml-1 text-sm">Корзина</span>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-50 border border-dashed rounded-lg p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">Как оформить заказ на шары в Кемерово? Есть несколько способов:</h3>
+                <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                    <li>Выбирать интересующие позиции на сайте, добавить их в корзину. После оформления заказа мы Вам перезвоним, чтобы подтвердить заказ.</li>
+                    <li>Написать нам в группу <a href="#" class="text-green-600 hover:underline">Вконтакте</a>.</li>
+                    <li>Придти к нам в магазин по адресу г. Кемерово, ул. Дзержинского д.4, оформить через менеджера.</li>
+                    <li>Позвонить нам по телефону <strong>89236111910</strong>, либо написать в <a href="#" class="text-green-600 hover:underline">WhatsApp</a></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Categories -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Популярные категории:</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 category-card">
+                        <img src="https://placehold.co/400x250/0f2c5a/ffffff?text=Шары+для+девочек" alt="ШАРЫ ДЛЯ ДЕВОЧЕК" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ШАРЫ ДЛЯ ДЕВОЧЕК</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 category-card">
+                        <img src="https://placehold.co/400x250/0f2c5a/ffffff?text=Шары+для+мальчиков" alt="ШАРЫ ДЛЯ МАЛЬЧИКОВ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ШАРЫ ДЛЯ МАЛЬЧИКОВ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 category-card">
+                        <img src="https://placehold.co/400x250/0f2c5a/ffffff?text=С+цифрами" alt="С ЦИФРАМИ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">С ЦИФРАМИ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 category-card">
+                        <img src="https://placehold.co/400x250/0f2c5a/ffffff?text=С+большим+шаром" alt="С БОЛЬШИМ ШАРОМ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">С БОЛЬШИМ ШАРОМ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 category-card">
+                        <img src="https://placehold.co/400x250/0f2c5a/ffffff?text=Шары+для+мужчин" alt="ШАРЫ ДЛЯ МУЖЧИН" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ШАРЫ ДЛЯ МУЖЧИН</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 category-card">
+                        <img src="https://placehold.co/400x250/0f2c5a/ffffff?text=Шары+для+девушек" alt="ШАРЫ ДЛЯ ДЕВУШЕК" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ШАРЫ ДЛЯ ДЕВУШЕК</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Color Filter -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Подобрать набор шаров по цвету:</h2>
+            <div class="flex flex-wrap gap-4 justify-center" id="colorOptions">
+                <div class="flex flex-col items-center">
+                    <div class="color-option active" style="background-color: #ffffff;" data-color="Белый и бежевый"></div>
+                    <span class="text-xs mt-2 text-gray-600">Белый и бежевый</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #000000;" data-color="Чёрный"></div>
+                    <span class="text-xs mt-2 text-gray-600">Чёрный</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #ff99cc;" data-color="Розовый"></div>
+                    <span class="text-xs mt-2 text-gray-600">Розовый</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #e6b8cf;" data-color="Розовое золото и пудровый"></div>
+                    <span class="text-xs mt-2 text-gray-600">Розовое золото и пудровый</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #ff00ff;" data-color="Ярко-розовый"></div>
+                    <span class="text-xs mt-2 text-gray-600">Ярко-розовый</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #0099ff;" data-color="Голубой"></div>
+                    <span class="text-xs mt-2 text-gray-600">Голубой</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #0000ff;" data-color="Синий"></div>
+                    <span class="text-xs mt-2 text-gray-600">Синий</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #009999;" data-color="Бирюзовый Тиффани"></div>
+                    <span class="text-xs mt-2 text-gray-600">Бирюзовый Тиффани</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #cccccc;" data-color="Серебро"></div>
+                    <span class="text-xs mt-2 text-gray-600">Серебро</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #ffd700;" data-color="Золото"></div>
+                    <span class="text-xs mt-2 text-gray-600">Золото</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #9370db;" data-color="Сиреневый Фиолетовый"></div>
+                    <span class="text-xs mt-2 text-gray-600">Сиреневый Фиолетовый</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="color-option" style="background-color: #ff0000;" data-color="Красный"></div>
+                    <span class="text-xs mt-2 text-gray-600">Красный</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/cccccc/000000?text=Девичник" alt="ДЕВИЧНИК" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ДЕВИЧНИК</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/cccccc/000000?text=Гендерпати" alt="ГЕНДЕРПАТИ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ГЕНДЕРПАТИ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/cccccc/000000?text=Выписка+из+роддома" alt="ВЫПИСКА ИЗ РОДДОМА" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ВЫПИСКА ИЗ РОДДОМА</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/cccccc/000000?text=1+годик" alt="1 ГОДИК" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">1 ГОДИК</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/cccccc/000000?text=Фигуры+из+шаров" alt="ФИГУРЫ ИЗ ШАРОВ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ФИГУРЫ ИЗ ШАРОВ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/cccccc/000000?text=Оформление+праздников" alt="ОФОРМЛЕНИЕ ПРАЗДНИКОВ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ОФОРМЛЕНИЕ ПРАЗДНИКОВ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/e6f7ff/000000?text=Латексные+шары" alt="ЛАТЕКСНЫЕ ШАРЫ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ЛАТЕКСНЫЕ ШАРЫ</h3>
+                                <p class="text-sm mt-1">Гелиевые шары</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/fef0f0/000000?text=Фольгированные+шары" alt="ФОЛЬГИРОВАННЫЕ ШАРЫ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ФОЛЬГИРОВАННЫЕ ШАРЫ</h3>
+                                <p class="text-sm mt-1">Гелиевые шары</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/f0f0f0/000000?text=Комплименты+и+приколы" alt="КОМПЛИМЕНТЫ И ПРИКОЛЫ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">КОМПЛИМЕНТЫ И ПРИКОЛЫ</h3>
+                                <p class="text-sm mt-1">Гелиевые шары</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/f0f0f0/000000?text=Коробки+сюрприз" alt="КОРОБКИ СЮРПРИЗ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">КОРОБКИ СЮРПРИЗ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/f0f0f0/000000?text=Фонтаны+из+шаров" alt="ФОНТАНЫ ИЗ ШАРОВ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">ФОНТАНЫ ИЗ ШАРОВ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-lg shadow-md transform transition-transform duration-300 hover:scale-105 product-card">
+                        <img src="https://placehold.co/400x250/f0f0f0/000000?text=Стойки+из+шаров" alt="СТОЙКИ ИЗ ШАРОВ" class="w-full h-48 object-cover" />
+                        <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold">СТОЙКИ ИЗ ШАРОВ</h3>
+                                <p class="text-sm mt-1">Наборы шаров</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Последние статьи</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/300x200/0f2c5a/ffffff?text=Памятка" alt="Памятка по обращению с воздушными композициями" class="w-full h-32 object-cover rounded-lg mb-3" />
+                    <h3 class="font-semibold text-gray-900 mb-2">Памятка по обращению с воздушными композициями</h3>
+                    <p class="text-sm text-gray-600">Что нужно сделать, чтобы шарики радовали вас как можно дольше?</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/300x200/0f2c5a/ffffff?text=Тренды" alt="Тренды/антитренды в мире шаров" class="w-full h-32 object-cover rounded-lg mb-3" />
+                    <h3 class="font-semibold text-gray-900 mb-2">Тренды/антитренды в мире шаров</h3>
+                    <p class="text-sm text-gray-600">"Что такое хорошо" и "что такое плохо" в мире праздничных украшений? Давайте разберемся, как нужно оформить праздник так...</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/300x200/0f2c5a/ffffff?text=Советы" alt="Советы при самовывозе" class="w-full h-32 object-cover rounded-lg mb-3" />
+                    <h3 class="font-semibold text-gray-900 mb-2">Советы при самовывозе</h3>
+                    <p class="text-sm text-gray-600">Как лучше всего обращаться с шарами, если вы забираете их самостоятельно...</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/300x200/0f2c5a/ffffff?text=Заказ" alt="За какое время необходимо оформить заказ?" class="w-full h-32 object-cover rounded-lg mb-3" />
+                    <h3 class="font-semibold text-gray-900 mb-2">За какое время необходимо оформить заказ?</h3>
+                    <p class="text-sm text-gray-600">А если мне нужны шарики на следующей неделе, когда можно оформить заказ? А на завтра? А через месяц принимаете заказы?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Новости</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/150x100/0f2c5a/ffffff?text=Цветы" alt="Теперь у нас есть цветы!" class="w-full h-24 object-cover rounded-lg mb-3" />
+                    <div class="flex items-center mb-2">
+                        <i class="far fa-clock text-gray-400 mr-1"></i>
+                        <span class="text-xs text-gray-500">04.09.2024</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Теперь у нас есть цветы!</h3>
+                    <p class="text-sm text-gray-600">Мы долго к этому шли, и вот, в нашем пространстве на ул. Дзержинского 4, вы можете выбрать не только воздушные композиции...</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/150x100/0f2c5a/ffffff?text=Лето" alt="Про длительность полёта шаров летом" class="w-full h-24 object-cover rounded-lg mb-3" />
+                    <div class="flex items-center mb-2">
+                        <i class="far fa-clock text-gray-400 mr-1"></i>
+                        <span class="text-xs text-gray-500">16.03.2023</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Про длительность полёта шаров летом</h3>
+                    <p class="text-sm text-gray-600">Информация о том, как долго будут у вас летать шарики...</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/150x100/0f2c5a/ffffff?text=Новый+год" alt="С Новым 2022 Годом!" class="w-full h-24 object-cover rounded-lg mb-3" />
+                    <div class="flex items-center mb-2">
+                        <i class="far fa-clock text-gray-400 mr-1"></i>
+                        <span class="text-xs text-gray-500">03.01.2022</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">С Новым 2022 Годом!</h3>
+                    <p class="text-sm text-gray-600">Мы от всей души поздравляем вас с Новым 2022 годом!</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-300">
+                    <img src="https://placehold.co/150x100/0f2c5a/ffffff?text=1+сентября" alt="Оформление на 1 сентября" class="w-full h-24 object-cover rounded-lg mb-3" />
+                    <div class="flex items-center mb-2">
+                        <i class="far fa-clock text-gray-400 mr-1"></i>
+                        <span class="text-xs text-gray-500">28.07.2020</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Оформление на 1 сентября</h3>
+                    <p class="text-sm text-gray-600">Шарики на Первое Сентября в Кемерово с доставкой...</p>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <button class="text-gray-600 hover:text-blue-600 text-sm font-medium">
+                    <span>смотреть все</span>
+                    <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">КАТАЛОГ</h3>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Акции</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Латексные шары</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Фольгированные шары</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Фигуры из воздушных шаров</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Подобрать по мультигерою</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Подобрать по событию</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Подобрать по получателю</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Наборы шаров</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Товары для праздника</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Подарки и сувениры</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Оформление праздников</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ПОМОЩЬ</h3>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">О нас</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Доставка</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Вопрос и ответ</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Новости</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Полезная информация</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Бонусная программа</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">КОНТАКТЫ</h3>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mr-2 mt-0.5 text-gray-500"></i>
+                            <span>8-923-611-1910</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mr-2 mt-0.5 text-gray-500"></i>
+                            <span>8-923-611-1810</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="far fa-clock mr-2 mt-0.5 text-gray-500"></i>
+                            <span>ПН-СБ: с 09:00 до 20:00<br />ВС: с 09:00 до 18:00</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-0.5 text-gray-500"></i>
+                            <span>г. Кемерово, ул. Дзержинского д.4</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ПОКУПАТЕЛЯМ</h3>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Личный кабинет</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">История заказов</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition-colors duration-200">Рассылка новостей</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-sm text-gray-600">
+                <p>© 2024 Шарландия. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <div id="scrollTop" class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Color selection
+        const colorOptions = document.querySelectorAll('.color-option');
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                console.log('Selected color:', option.getAttribute('data-color'));
+            });
+        });
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
